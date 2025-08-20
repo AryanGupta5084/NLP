@@ -1,130 +1,162 @@
-# End to end Text-Summarizer-Project
 
-## Workflows
+# 📝 End to end Text-Summarizer
 
-1. Update config.yaml
-2. Update params.yaml
-3. Update entity
-4. Update the configuration manager in src config
-5. update the conponents
-6. update the pipeline
-7. update the main.py
-8. update the app.py
+An end-to-end Natural Language Processing (NLP) pipeline built to summarize long text documents. This project includes modular stages for data processing, model training, and deployment via a FastAPI interface.
 
+---
 
-# How to run?
-### STEPS:
+## 📚 Table of Contents
 
-Clone the repository
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [API Endpoints](#-api-endpoints)
+- [Configuration](#-configuration)
+- [Dependencies](#-dependencies)
+- [Examples](#-examples)
+- [Troubleshooting](#-troubleshooting)
+- [Contributors](#-contributors)
+- [License](#-license)
+
+---
+
+## 🚀 Features
+
+- Modularized training pipeline for ingestion, validation, transformation, training, and evaluation
+- FastAPI server with endpoints to train or predict
+- Custom YAML-based configuration system
+- Docker support for containerized deployment
+- Clean code structure for production-grade use
+
+---
+
+## 🏗 Project Structure
+
+```
+├── app.py                  # FastAPI app
+├── main.py                 # Training pipeline orchestrator
+├── Dockerfile              # For containerization
+├── params.yaml             # Model parameters
+├── config/config.yaml      # Path and data configurations
+├── src/textSummarizer/
+│   ├── config/             # Configuration management
+│   ├── conponents/         # Pipeline components (data ingestion, transformation, etc.)
+│   ├── constants/          # Constants
+│   ├── entity/             # Data schema/entities
+│   ├── logging/            # Logging module
+│   ├── pipeline/           # Stage-wise training and prediction scripts
+│   └── utils/              # Utility functions
+└── research/               # Jupyter notebooks for experimentation
+```
+
+---
+
+## 🛠 Installation
+
+### 1. Clone the Repository
 
 ```bash
-https://github.com/AryanGupta5084/Text-Summarizer-Project.git
+git clone https://github.com/AryanGupta5084/Text-Summarizer-Project.git
+cd Text-Summarizer-Project
 ```
-### STEP 01- Create a conda environment after opening the repository
+
+### 2. Create and Activate Environment
 
 ```bash
 conda create -n summary python=3.9 -y
-```
-
-```bash
 conda activate summary
 ```
 
+### 3. Install Dependencies
 
-### STEP 02- install the requirements
 ```bash
 pip install -r requirements.txt
 ```
 
+---
+
+## ▶️ Usage
+
+### Run FastAPI Server
 
 ```bash
-# Finally run the following command
 python app.py
 ```
 
-Now,
+Open your browser at: [http://localhost:8000/docs](http://localhost:8000/docs) to access the Swagger UI.
+
+---
+
+## 📡 API Endpoints
+
+| Method | Endpoint     | Description                        |
+|--------|--------------|------------------------------------|
+| GET    | `/train`     | Triggers the full training pipeline |
+| POST   | `/predict`   | Returns summary for given text     |
+| GET    | `/`          | Redirects to docs                  |
+
+---
+
+## ⚙ Configuration
+
+- `config/config.yaml`: Paths to data directories
+- `params.yaml`: Hyperparameters for model training
+
+---
+
+## 📦 Dependencies
+
+- `FastAPI`
+- `uvicorn`
+- `pydantic`
+- `PyYAML`
+- `transformers` or any summarization-compatible NLP library
+- `scikit-learn`, `pandas`, `numpy`
+
+> Install using:  
 ```bash
-open up you local host and port
+pip install -r requirements.txt
 ```
 
+---
 
-```bash
-Author: Aryan Gupta
-Email: ag5787842@gmail.com
+## 🧪 Examples
 
+Example `POST` request to `/predict`:
+
+```json
+{
+  "text": "Text summarization is a Natural Language Processing (NLP) task..."
+}
 ```
 
+Response:
+```json
+{
+  "summary": "Text summarization is an NLP task..."
+}
+```
 
+---
 
-# AWS-CICD-Deployment-with-Github-Actions
+## 🛠 Troubleshooting
 
-## 1. Login to AWS console.
+- ⚠ **No response from `/predict`**: Ensure the model is trained (`/train`) before predicting.
+- ⚠ **Module errors**: Double-check environment paths and virtual environment activation.
+- ⚠ **Docker issues**: Ensure Docker is installed and build the container with `docker build -t summarizer .`
 
-## 2. Create IAM user for deployment
+---
 
-	#with specific access
+## 👨‍💻 Contributors
 
-	1. EC2 access : It is virtual machine
+- **Aryan Gupta**  
+  📧 ag5787842@gmail.com
 
-	2. ECR: Elastic Container registry to save your docker image in aws
+---
 
+## 📄 License
 
-	#Description: About the deployment
+This project is licensed under the terms of the [LICENSE](./LICENSE) file in this repository.
 
-	1. Build docker image of the source code
-
-	2. Push your docker image to ECR
-
-	3. Launch Your EC2 
-
-	4. Pull Your image from ECR in EC2
-
-	5. Lauch your docker image in EC2
-
-	#Policy:
-
-	1. AmazonEC2ContainerRegistryFullAccess
-
-	2. AmazonEC2FullAccess
-
-	
-## 3. Create ECR repo to store/save docker image
-    - Save the URI: 566373416292.dkr.ecr.us-east-1.amazonaws.com/text-s
-
-	
-## 4. Create EC2 machine (Ubuntu) 
-
-## 5. Open EC2 and Install docker in EC2 Machine:
-	
-	
-	#optinal
-
-	sudo apt-get update -y
-
-	sudo apt-get upgrade
-	
-	#required
-
-	curl -fsSL https://get.docker.com -o get-docker.sh
-
-	sudo sh get-docker.sh
-
-	sudo usermod -aG docker ubuntu
-
-	newgrp docker
-	
-# 6. Configure EC2 as self-hosted runner:
-    setting>actions>runner>new self hosted runner> choose os> then run command one by one
-
-
-# 7. Setup github secrets:
-
-    AWS_ACCESS_KEY_ID=
-
-    AWS_SECRET_ACCESS_KEY=
-
-    AWS_REGION = us-east-1
-
-    AWS_ECR_LOGIN_URI = demo>>  566373416292.dkr.ecr.ap-south-1.amazonaws.com
-
-    ECR_REPOSITORY_NAME = simple-app
+> © 2025 Aryan Gupta. All rights reserved.
